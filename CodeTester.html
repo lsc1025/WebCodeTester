@@ -168,6 +168,9 @@
                     '<style>' + $("#cssCode").val() + '</style>' +
                     $("#htmlCode").val()
                     );// set iframe to display content of html & css
+
+                document.getElementById("outputFrame").contentWindow.eval($("#jsCode").val());
+
             });
 
         }
@@ -210,7 +213,7 @@
 
                 <div class="codeLabel">HTML</div>
 
-                <textarea id="htmlCode"></textarea>
+                <textarea id="htmlCode">sdsds</textarea>
 
             </div>
 
@@ -234,7 +237,7 @@
 
                 <div class="codeLabel">Output</div>
 
-                <iframe></iframe>
+                <iframe id="outputFrame"></iframe>
 
             </div>
         </div>
