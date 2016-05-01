@@ -1,0 +1,216 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <meta content="utf8"/>
+
+    <style type="text/css">
+
+
+        body{
+            margin:0;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        #container{
+            
+        }
+        p{
+            margin:0;
+        }
+        #credits{
+            font-size:0.6em;
+            position:absolute;
+            top:30px;
+            left:150px;
+        }
+        #title{
+            
+            font-size:1.5em;
+            font-weight:bold;
+            padding:10px;
+            float:left;
+        }
+        #buttons{
+            width:200px;
+            margin:0 auto;
+            list-style:none;
+        }
+        #buttons li{
+            float:left;
+            padding:5px;
+            border:1px solid aqua;
+            font-weight:bold;
+            margin-top:10px;
+            background-color:none;
+        }
+
+        .leftItem{
+            border-radius:8px 0 0 8px;
+        }
+
+        .rightItem{
+            border-radius:0 8px 8px 0;
+        }
+
+        #topBar{
+            width:100%;
+            height:50px;
+            background-color:aliceblue;
+            border-bottom:1px solid aqua;
+        }
+
+        #run{
+            float:right;
+            margin:8px;
+            font-size:1.2em;
+            
+        }
+
+        .codeField{
+            float:left;
+            
+            position:relative;
+            margin:1px;
+        }
+        .clear{
+            clear:both;
+        }
+        .fixedWidth{
+            width:100%;
+        }
+        .selected{
+            background-color:aqua;
+        }
+        textarea{
+            margin:0;
+            border:none;
+            width:99%;
+            height:99%;
+            border-right:1px solid aqua;
+            font-size:1.3em;
+            resize:horizontal;
+        }
+        .codeLabel{
+            position:absolute;
+            right:5px;
+            top:5px;
+            border:1px solid aqua;
+            border-radius:5px;
+            padding:3px;
+        }
+        iframe{
+            border:none;
+            width:100%;
+            height:99%
+        }
+
+
+    </style>
+
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+    <script type="text/javascript">
+
+        window.onload = function () {
+
+            jQueryTest();
+
+            var codeFieldHeight = $(window).height() - $("#topBar").height() - 1;
+            var status = [0, 0, 0];
+
+            $(".codeField").height(codeFieldHeight + "px");
+            
+            $(".toggle").click(function () {
+
+                $(this).toggleClass("selected");
+
+            });
+
+            $("toggle").select(function () {
+                document.selection.empty();
+            });
+
+            $(".toggle").hover(function () {
+                $(this).css("cursor", "pointer");
+            });
+
+            $(".codeLabel").hover(function () {
+                $(this).css("cursor", "default");
+            });
+
+        }
+
+        function jQueryTest(){
+            if (typeof jquery==null)
+                alert("WARNING: jQuery loaded fail!");   
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="container">
+
+        <div id="topBar">
+
+            <p id="title">Web CodeTester</p>
+            <p id="credits">Inspired by JS Bin</p>
+            <ul id="buttons">
+
+                <li id="html" class="leftItem toggle selected">HTML</li>
+                <li id="css" class="toggle">CSS</li>
+                <li id="js" class="toggle">JS</li>
+                <li id="output" class="rightItem toggle selected">Output</li>
+
+            </ul>
+            <button id="run">Run</button>
+
+
+        </div>
+
+        <div class="clear"></div>
+
+        <div class="fixedWidth">
+
+            <div class="codeField" id="htmlField">
+
+                <div class="codeLabel">HTML</div>
+
+                <textarea></textarea>
+
+            </div>
+
+            <div class="codeField" id="cssField">
+
+                <div class="codeLabel">CSS</div>
+
+                <textarea></textarea>
+
+            </div>
+
+            <div class="codeField" id="jsField">
+
+                <div class="codeLabel">JS</div>
+
+                <textarea></textarea>
+
+            </div>
+
+            <div class="codeField" id="outputField">
+
+                <div class="codeLabel">Output</div>
+
+                <iframe></iframe>
+
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
