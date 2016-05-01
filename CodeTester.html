@@ -3,109 +3,116 @@
 
 <head>
 
-    <meta content="utf8"/>
+    <meta content="utf8" />
 
     <style type="text/css">
-
-
-        body{
-            margin:0;
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-        #container{
-            
-        }
-        p{
-            margin:0;
-        }
-        #credits{
-            font-size:0.6em;
-            position:absolute;
-            top:30px;
-            left:150px;
-        }
-        #title{
-            
-            font-size:1.5em;
-            font-weight:bold;
-            padding:10px;
-            float:left;
-        }
-        #buttons{
-            width:200px;
-            margin:0 auto;
-            list-style:none;
-        }
-        #buttons li{
-            float:left;
-            padding:5px;
-            border:1px solid aqua;
-            font-weight:bold;
-            margin-top:10px;
-            background-color:none;
+        body {
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
 
-        .leftItem{
-            border-radius:8px 0 0 8px;
+        #container {
         }
 
-        .rightItem{
-            border-radius:0 8px 8px 0;
+        p {
+            margin: 0;
         }
 
-        #topBar{
-            width:100%;
-            height:50px;
-            background-color:aliceblue;
-            border-bottom:1px solid aqua;
+        #credits {
+            font-size: 0.6em;
+            position: absolute;
+            top: 30px;
+            left: 150px;
         }
 
-        #run{
-            float:right;
-            margin:8px;
-            font-size:1.2em;
-            
+        #title {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 10px;
+            float: left;
         }
 
-        .codeField{
-            float:left;
-            
-            position:relative;
-            margin:1px;
-        }
-        .clear{
-            clear:both;
-        }
-        .fixedWidth{
-            width:100%;
-        }
-        .selected{
-            background-color:aqua;
-        }
-        textarea{
-            margin:0;
-            border:none;
-            width:99%;
-            height:99%;
-            border-right:1px solid aqua;
-            font-size:1.3em;
-            resize:horizontal;
-        }
-        .codeLabel{
-            position:absolute;
-            right:5px;
-            top:5px;
-            border:1px solid aqua;
-            border-radius:5px;
-            padding:3px;
-        }
-        iframe{
-            border:none;
-            width:100%;
-            height:99%
+        #buttons {
+            width: 200px;
+            margin: 0 auto;
+            list-style: none;
         }
 
+            #buttons li {
+                float: left;
+                padding: 5px;
+                border: 1px solid aqua;
+                font-weight: bold;
+                margin-top: 10px;
+                background-color: none;
+            }
 
+        .leftItem {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .rightItem {
+            border-radius: 0 8px 8px 0;
+        }
+
+        #topBar {
+            width: 100%;
+            height: 50px;
+            background-color: aliceblue;
+            border-bottom: 1px solid aqua;
+        }
+
+        #run {
+            float: right;
+            margin: 8px;
+            font-size: 1.2em;
+        }
+
+        .codeField {
+            float: left;
+            width: 50%;
+            position: relative;
+            margin: 0px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .selected {
+            background-color: aqua;
+        }
+
+        textarea {
+            padding: 40px 10px 0 10px;
+            border: none;
+            width: 100%;
+            height: 100%;
+            border-right: 1px solid aqua;
+            font-size: 1.3em;
+            resize: none;
+            box-sizing: border-box;
+        }
+
+        .codeLabel {
+            position: absolute;
+            right: 15px;
+            top: 5px;
+            border: 1px solid aqua;
+            border-radius: 5px;
+            padding: 3px;
+            margin: 5px;
+        }
+
+        iframe {
+            padding-top: 40px;
+            border: none;
+            width: 100%;
+        }
+
+        #cssField, #jsField {
+            display: none;
+        }
     </style>
 
     <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -117,34 +124,57 @@
 
             jQueryTest();
 
-            var codeFieldHeight = $(window).height() - $("#topBar").height() - 1;
-            var status = [0, 0, 0];
+            var codeFieldHeight = $(window).height() - $("#topBar").height();
+            var windowWidth = $(window).width();
+            var activeDiv = 0;
+            var codeFieldWidth = 0;
+            var calledItem = "";
 
-            $(".codeField").height(codeFieldHeight + "px");
-            
+            $(".codeField, iframe").height(codeFieldHeight + "px"); // set height of code field
+
             $(".toggle").click(function () {
 
-                $(this).toggleClass("selected");
+                $(this).toggleClass("selected"); //toggle the color of clicked button
+
+                calledItem = $(this).attr("id");
+                $("#"+calledItem+"Field").toggle();// toggle the selected field
+
+                activeDiv = $(".codeField").filter(function () {// get the num of active divs
+
+                    return ($(this).css("display") != "none");
+
+                }).length;
+
+                codeFieldWidth = (100 / activeDiv);
+                $(".codeField").css("width", codeFieldWidth + "%");// set the width of code fields
 
             });
 
             $("toggle").select(function () {
-                document.selection.empty();
+                document.selection.empty(); //gonna look that later
             });
 
-            $(".toggle").hover(function () {
-                $(this).css("cursor", "pointer");
+            $(".toggle, #run").hover(function () {
+                $(this).css("cursor", "pointer"); //set the cursor to hand shape
             });
 
-            $(".codeLabel").hover(function () {
-                $(this).css("cursor", "default");
+            $(".codeLabel, #title, #credits").hover(function () {
+                $(this).css("cursor", "default"); // set the curser to default
+            });
+
+            $("#run").click( function () {
+
+                $("iframe").contents().find("html").html(
+                    '<style>' + $("#cssCode").val() + '</style>' +
+                    $("#htmlCode").val()
+                    );// set iframe to display content of html & css
             });
 
         }
 
         function jQueryTest(){
             if (typeof jquery==null)
-                alert("WARNING: jQuery loaded fail!");   
+                alert("WARNING: jQuery loaded fail!"); // alert user if jQuery is not running
         }
 
     </script>
@@ -180,7 +210,7 @@
 
                 <div class="codeLabel">HTML</div>
 
-                <textarea></textarea>
+                <textarea id="htmlCode"></textarea>
 
             </div>
 
@@ -188,7 +218,7 @@
 
                 <div class="codeLabel">CSS</div>
 
-                <textarea></textarea>
+                <textarea id="cssCode"></textarea>
 
             </div>
 
@@ -196,7 +226,7 @@
 
                 <div class="codeLabel">JS</div>
 
-                <textarea></textarea>
+                <textarea id="jsCode"></textarea>
 
             </div>
 
